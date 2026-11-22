@@ -1,0 +1,257 @@
+name: Deploy iPhone Simulator
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build app
+        run: npm run build -- --base=/i-phone/
+
+      - name: Upload build
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>iPhone 18 Pro Max Simulator</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;background:#171717;color:white;
+ font-family:-apple-system,BlinkMacSystemFont,Arial;
+ display:flex;justify-content:center;align-items:center;
+ min-height:100vh;
+}
+.phone{
+ width:min(77.6mm,94vw);
+ height:min(163mm,96vh);
+ aspect-ratio:77.6/163;
+ background:#000;border:5px solid #555;
+ border-radius:45px;padding:12px;
+ position:relative;overflow:hidden;
+ box-shadow:0 0 35px #000;
+}
+.screen{
+ height:100%;width:100%;border-radius:33px;
+ overflow:hidden;position:relative;
+ background:linear-gradient(150deg,#365d8d,#141a35,#090a13);
+}
+.status{
+ height:38px;padding:10px 18px;
+ display:flex;justify-content:space-between;
+ font-size:12px;
+}
+.island{
+ width:95px;height:25px;background:#000;
+ border-radius:20px;position:absolute;
+ top:8px;left:50%;transform:translateX(-50%);
+}
+.home{
+ padding:25px 13px;
+ display:grid;grid-template-columns:repeat(4,1fr);
+ gap:19px 9px;
+}
+.app{
+ text-align:center;cursor:pointer;font-size:11px;
+}
+.icon{
+ width:43px;height:43px;border-radius:13px;
+ margin:auto auto 5px;
+ display:flex;align-items:center;justify-content:center;
+ font-size:24px;background:#ffffff25;
+}
+.panel{
+ position:absolute;inset:0;background:#10121c;
+ display:none;flex-direction:column;
+ padding:15px;z-index:5;
+}
+.panel.active{display:flex}
+.top{display:flex;justify-content:space-between;
+ align-items:center;margin-bottom:15px}
+button{
+ border:0;border-radius:12px;padding:10px;
+ cursor:pointer;background:#ffffff20;color:white;
+}
+.back{font-size:17px}
+.content{overflow:auto;flex:1}
+input{
+ width:100%;padding:12px;border-radius:12px;
+ border:0;margin:10px 0;background:#333;color:white;
+}
+iframe{width:100%;height:65%;border:0;border-radius:12px}
+.dock{
+ position:absolute;bottom:15px;left:12px;right:12px;
+ background:#ffffff30;border-radius:22px;
+ display:grid;grid-template-columns:repeat(4,1fr);
+ padding:10px;gap:8px;
+}
+.dock .icon{background:#ffffff35}
+.wallpaper{padding-top:5px;text-align:center}
+#time{font-size:36px;font-weight:300}
+</style>
+</head>
+<body>
+<div class="phone">
+<div class="screen">
+<div class="status">
+<span id="clock">9:41</span>
+<span>●●● ▰</span>
+</div>
+<div class="island"></div>
+
+<div class="wallpaper">
+<div id="time">9:41</div>
+<div id="date"></div>
+</div>
+
+<div class="home" id="apps">
+<div class="app" onclick="openApp('YouTube')"><div class="icon">▶️</div>YouTube</div>
+<div class="app" onclick="openApp('Browser')"><div class="icon">🌐</div>Browser</div>
+<div class="app" onclick="openApp('Camera')"><div class="icon">📷</div>Camera</div>
+<div class="app" onclick="openApp('Photos')"><div class="icon">🌄</div>Photos</div>
+<div class="app" onclick="openApp('Phone')"><div class="icon">📞</div>Phone</div>
+<div class="app" onclick="openApp('Messages')"><div class="icon">💬</div>Messages</div>
+<div class="app" onclick="openApp('Settings')"><div class="icon">⚙️</div>Settings</div>
+<div class="app" onclick="openApp('App Store')"><div class="icon">🛍️</div>App Store</div>
+<div class="app" onclick="openApp('Music')"><div class="icon">🎵</div>Music</div>
+<div class="app" onclick="openApp('Calculator')"><div class="icon">🧮</div>Calculator</div>
+<div class="app" onclick="openApp('Clock')"><div class="icon">⏰</div>Clock</div>
+<div class="app" onclick="openApp('Calendar')"><div class="icon">📅</div>Calendar</div>
+</div>
+
+<div class="dock">
+<div class="app" onclick="openApp('Phone')"><div class="icon">📞</div></div>
+<div class="app" onclick="openApp('Messages')"><div class="icon">💬</div></div>
+<div class="app" onclick="openApp('Browser')"><div class="icon">🌐</div></div>
+<div class="app" onclick="openApp('Music')"><div class="icon">🎵</div></div>
+</div>
+
+<div class="panel" id="panel">
+<div class="top">
+<button class="back" onclick="closeApp()">‹ Home</button>
+<strong id="appTitle">App</strong>
+<button onclick="closeApp()">✕</button>
+</div>
+<div class="content" id="content"></div>
+</div>
+</div>
+</div>
+
+<script>
+function updateClock(){
+ const d=new Date();
+ document.getElementById('clock').textContent=
+ d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+ document.getElementById('time').textContent=
+ d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+ document.getElementById('date').textContent=
+ d.toLocaleDateString([], {weekday:'long',month:'long',day:'numeric'});
+}
+setInterval(updateClock,1000);updateClock();
+
+function openApp(name){
+ document.getElementById('panel').classList.add('active');
+ document.getElementById('appTitle').textContent=name;
+ const c=document.getElementById('content');
+ const apps={
+ 'YouTube':`
+ <h2>YouTube</h2>
+ <input id="ytsearch" placeholder="Search YouTube videos">
+ <button onclick="searchYT()">Search</button>
+ <div id="ytresults">Search for videos on YouTube.</div>`,
+ 'Browser':`
+ <h2>Internet Browser</h2>
+ <input id="url" value="https://www.google.com">
+ <button onclick="browse()">Go</button>
+ <iframe id="webframe" src="https://www.google.com"></iframe>
+ <p>Some websites block iframe access. Open them in a new tab if needed.</p>`,
+ 'Camera':`<h2>Camera</h2><video id="camera" autoplay playsinline style="width:100%"></video><button onclick="startCamera()">Start Camera</button>`,
+ 'Photos':`<h2>Photos</h2><input type="file" accept="image/*" multiple onchange="showPhotos(event)"><div id="photos"></div>`,
+ 'Phone':`<h2>Phone</h2><input id="number" placeholder="Enter phone number"><button onclick="location.href='tel:'+document.getElementById('number').value">Call</button>`,
+ 'Messages':`<h2>Messages</h2><input id="msg" placeholder="Write a message"><button onclick="alert('Messaging requires a supported messaging service.')">Send</button>`,
+ 'Settings':`<h2>Settings</h2><p>Device: iPhone 18 Pro Max</p><p>Height: 163 mm</p><p>Width: 77.6 mm</p><p>Simulator version: 1.0</p><button onclick="document.querySelector('.screen').style.background='#222'">Dark wallpaper</button>`,
+ 'App Store':`<h2>App Store</h2><p>Simulator apps</p><p>More apps can be added by editing the project source code.</p>`,
+ 'Music':`<h2>Music</h2><input type="file" accept="audio/*" onchange="playMusic(event)"><audio id="audio" controls style="width:100%"></audio>`,
+ 'Calculator':`<h2>Calculator</h2><input id="calc" placeholder="Example: 10+20"><button onclick="calculate()">=</button><p id="answer"></p>`,
+ 'Clock':`<h2>Clock</h2><p id="clockapp"></p>`,
+ 'Calendar':`<h2>Calendar</h2><input type="date">`
+ };
+ c.innerHTML=apps[name]||'<h2>'+name+'</h2>';
+}
+function closeApp(){document.getElementById('panel').classList.remove('active')}
+function searchYT(){
+ const q=document.getElementById('ytsearch').value;
+ if(!q)return;
+ document.getElementById('ytresults').innerHTML=
+ `<iframe src="https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(q)}" allowfullscreen></iframe><p><a style="color:white" target="_blank" href="https://www.youtube.com/results?search_query=${encodeURIComponent(q)}">Open YouTube search</a></p>`;
+}
+function browse(){
+ let u=document.getElementById('url').value;
+ if(!/^https?:\/\//i.test(u))u='https://'+u;
+ window.open(u,'_blank');
+}
+async function startCamera(){
+ try{document.getElementById('camera').srcObject=await navigator.mediaDevices.getUserMedia({video:true})}
+ catch(e){alert('Camera permission unavailable')}
+}
+function showPhotos(e){
+ const p=document.getElementById('photos');
+ [...e.target.files].forEach(f=>{
+ const img=document.createElement('img');
+ img.src=URL.createObjectURL(f);img.style.width='90px';img.style.margin='5px';
+ p.appendChild(img);
+ });
+}
+function playMusic(e){
+ document.getElementById('audio').src=URL.createObjectURL(e.target.files[0]);
+}
+function calculate(){
+ try{
+ const x=document.getElementById('calc').value;
+ if(!/^[0-9+\-*/(). %]+$/.test(x))throw Error();
+ document.getElementById('answer').textContent=Function('"use strict";return ('+x+')')();
+ }catch(e){document.getElementById('answer').textContent='Invalid calculation'}
+}
+</script>
+</body>
+</html>
