@@ -1,0 +1,376 @@
+import {
+  appStoreTodayHero,
+  wallpaperBurgundy,
+  wallpaperGlacier,
+  wallpaperObsidian,
+} from './assets';
+import {
+  CalendarEvent,
+  ChatThread,
+  Contact,
+  EmailItem,
+  MediaItem,
+  MusicTrack,
+  NoteItem,
+  OSSettings,
+  PasswordEntry,
+  ReminderItem,
+  SafariBookmark,
+  YouTubeVideo,
+} from './types';
+
+export const WALLPAPERS = [
+  {
+    id: 'obsidian',
+    name: 'Liquid Obsidian',
+    src: wallpaperObsidian,
+    gradient: 'from-slate-950 via-blue-950 to-black',
+  },
+  {
+    id: 'glacier',
+    name: 'Glacier Glass',
+    src: wallpaperGlacier,
+    gradient: 'from-slate-200 via-sky-100 to-slate-300',
+  },
+  {
+    id: 'burgundy',
+    name: 'Burgundy Titanium',
+    src: wallpaperBurgundy,
+    gradient: 'from-rose-950 via-stone-900 to-black',
+  },
+  {
+    id: 'aurora',
+    name: 'Spatial Cobalt',
+    src: appStoreTodayHero,
+    gradient: 'from-indigo-950 via-sky-900 to-slate-950',
+  },
+];
+
+export const DEFAULT_SETTINGS: OSSettings = {
+  finish: 'obsidian',
+  wallpaper: 'obsidian',
+  darkMode: true,
+  brightness: 92,
+  volume: 75,
+  wifi: true,
+  wifiNetwork: 'Studio-5G-WiFi7',
+  bluetooth: true,
+  airplaneMode: false,
+  cellular: true,
+  unlimitedNetworkMode: true,
+  focusMode: 'off',
+  rotationLock: false,
+  alwaysOnDisplay: true,
+  faceIdEnabled: true,
+  passcodeEnabled: false,
+  passcode: '',
+  silentMode: false,
+  microphoneEnabled: true,
+  microphoneGain: 100,
+  hapticsEnabled: true,
+  soundEnabled: true,
+  trueTone: true,
+  lowPowerMode: false,
+  actionButtonAction: 'silent',
+  language: 'English (US)',
+  region: 'United States',
+  keyboardHaptics: true,
+  reduceMotion: false,
+  boldText: false,
+  safariBlockPopups: true,
+  safariPrivateDefault: false,
+  appleIdName: 'Alex Mercer',
+  appleIdEmail: 'alex.mercer@icloud.com',
+};
+
+export const SEED_MEDIA: MediaItem[] = [
+  {
+    id: 'seed-1',
+    type: 'photo',
+    src: wallpaperObsidian,
+    name: 'Liquid_Obsidian_ProRAW.jpg',
+    createdAt: Date.now() - 86400000 * 3,
+    favorite: true,
+    deleted: false,
+    album: 'Recents',
+  },
+  {
+    id: 'seed-2',
+    type: 'photo',
+    src: wallpaperGlacier,
+    name: 'Glacier_Refraction.jpg',
+    createdAt: Date.now() - 86400000 * 2,
+    favorite: false,
+    deleted: false,
+    album: 'Recents',
+  },
+  {
+    id: 'seed-3',
+    type: 'photo',
+    src: wallpaperBurgundy,
+    name: 'Burgundy_Silk_Studio.jpg',
+    createdAt: Date.now() - 86400000,
+    favorite: true,
+    deleted: false,
+    album: 'Wallpapers',
+  },
+  {
+    id: 'seed-4',
+    type: 'photo',
+    src: appStoreTodayHero,
+    name: 'Spatial_Glass_Sculpture.jpg',
+    createdAt: Date.now() - 3600000 * 5,
+    favorite: false,
+    deleted: false,
+    album: 'Wallpapers',
+  },
+];
+
+export const SEED_CONTACTS: Contact[] = [
+  { id: 'c1', name: 'Sarah Chen', phone: '+1 (408) 555-0142', email: 'sarah.chen@studio.io', company: 'Cupertino Design', avatarColor: 'from-sky-500 to-blue-600', favorite: true },
+  { id: 'c2', name: 'Liam Brooks', phone: '+1 (415) 555-0198', email: 'liam.brooks@proton.me', company: 'Horizon Labs', avatarColor: 'from-emerald-500 to-teal-600', favorite: true },
+  { id: 'c3', name: 'Maya Lin', phone: '+1 (650) 555-0117', email: 'maya@architecture.co', company: 'Lin Studio', avatarColor: 'from-rose-500 to-pink-600', favorite: true },
+  { id: 'c4', name: 'Noah Patel', phone: '+1 (212) 555-0174', email: 'noah.patel@venture.vc', company: 'Northstar', avatarColor: 'from-amber-500 to-orange-600' },
+  { id: 'c5', name: 'Emma Laurent', phone: '+33 6 12 34 56 78', email: 'emma@atelier-paris.fr', company: 'Atelier Paris', avatarColor: 'from-indigo-500 to-violet-600' },
+];
+
+export const SEED_THREADS: ChatThread[] = [
+  {
+    id: 't-im-1',
+    platform: 'imessage',
+    contactName: 'Sarah Chen',
+    handle: '+1 (408) 555-0142',
+    avatarColor: 'from-sky-500 to-blue-600',
+    unread: 1,
+    messages: [
+      { id: 'm1', sender: 'them', text: 'Have you tried the new 8x camera zoom on the 18 Pro Max yet?', timestamp: Date.now() - 3600000 * 2 },
+      { id: 'm2', sender: 'me', text: 'Just tested it! The Liquid Glass UI is crazy smooth at 120Hz.', timestamp: Date.now() - 3500000 },
+      { id: 'm3', sender: 'them', text: 'Send me a shot when you capture one!', timestamp: Date.now() - 900000 },
+    ],
+  },
+  {
+    id: 't-im-2',
+    platform: 'imessage',
+    contactName: 'Liam Brooks',
+    handle: '+1 (415) 555-0198',
+    avatarColor: 'from-emerald-500 to-teal-600',
+    unread: 0,
+    messages: [
+      { id: 'm4', sender: 'them', text: 'Coffee at 10am tomorrow near Infinite Loop?', timestamp: Date.now() - 7200000 },
+      { id: 'm5', sender: 'me', text: 'Sounds good, added to Calendar.', timestamp: Date.now() - 7000000 },
+    ],
+  },
+  {
+    id: 't-wa-1',
+    platform: 'whatsapp',
+    contactName: 'Maya Lin',
+    handle: '+1 (650) 555-0117',
+    avatarColor: 'from-rose-500 to-pink-600',
+    unread: 2,
+    messages: [
+      { id: 'w1', sender: 'them', text: 'Hey! Are we still on for the gallery walk tonight?', timestamp: Date.now() - 5400000 },
+      { id: 'w2', sender: 'them', text: 'I grabbed two extra passes in Wallet.', timestamp: Date.now() - 1800000 },
+    ],
+  },
+  {
+    id: 't-wa-2',
+    platform: 'whatsapp',
+    contactName: 'Design Team',
+    handle: 'Group · 6 members',
+    avatarColor: 'from-emerald-600 to-green-800',
+    unread: 0,
+    messages: [
+      { id: 'w3', sender: 'them', text: 'Updated prototype specs uploaded to Files.', timestamp: Date.now() - 86400000 },
+    ],
+  },
+  {
+    id: 't-tg-1',
+    platform: 'telegram',
+    contactName: 'Apple Silicon Insider',
+    handle: '@applesilicon_ch',
+    avatarColor: 'from-sky-500 to-indigo-600',
+    unread: 3,
+    messages: [
+      { id: 'tg1', sender: 'them', text: 'A20 Pro neural engine benchmarks just dropped — 2x faster on-device inference.', timestamp: Date.now() - 4200000 },
+      { id: 'tg2', sender: 'them', text: 'Liquid Glass shaders run at locked 120fps under 2W.', timestamp: Date.now() - 1200000 },
+    ],
+  },
+  {
+    id: 't-tg-2',
+    platform: 'telegram',
+    contactName: 'Noah Patel',
+    handle: '@noahpatel',
+    avatarColor: 'from-amber-500 to-orange-600',
+    unread: 0,
+    messages: [
+      { id: 'tg3', sender: 'me', text: 'Sending the deck over shortly.', timestamp: Date.now() - 28000000 },
+    ],
+  },
+];
+
+export const SEED_EMAILS: EmailItem[] = [
+  {
+    id: 'e1',
+    from: 'Apple Developer',
+    fromEmail: 'news@developer.apple.com',
+    subject: 'Welcome to iPhone 18 Pro Max & Liquid Glass SDK',
+    preview: 'Explore Dynamic Island Live Activities, ProRAW capture pipelines, and spatial audio APIs.',
+    body: 'Welcome to the latest generation of mobile spatial computing.\n\nWith iPhone 18 Pro Max, apps leverage translucent Liquid Glass surfaces, adaptive 120Hz ProMotion transitions, and instant Dynamic Island live activities.\n\nOpen Tips or the App Store to explore everything built into your simulator.',
+    timestamp: Date.now() - 3600000 * 3,
+    unread: true,
+    flagged: true,
+    folder: 'vip',
+  },
+  {
+    id: 'e2',
+    from: 'Sarah Chen',
+    fromEmail: 'sarah.chen@studio.io',
+    subject: 'Q4 Hardware Finish Review — Burgundy & Glacier',
+    preview: 'Attached the studio lighting notes for the titanium chassis variants...',
+    body: 'Hi Alex,\n\nThe brushed titanium edge highlights on the Burgundy and Glacier finishes look remarkable under soft studio light. Let me know which finish you prefer as default.\n\nBest,\nSarah',
+    timestamp: Date.now() - 3600000 * 12,
+    unread: false,
+    flagged: false,
+    folder: 'inbox',
+  },
+];
+
+export const SEED_NOTES: NoteItem[] = [
+  {
+    id: 'n1',
+    title: 'iPhone 18 Pro Max Checklist',
+    body: '• Test 8x telephoto zoom in Camera\n• Try Always-On Display & Burgundy Titanium finish\n• Install SketchPad Pro from App Store\n• Ask Siri to set a timer or open YouTube',
+    folder: 'Notes',
+    pinned: true,
+    updatedAt: Date.now() - 1800000,
+  },
+  {
+    id: 'n2',
+    title: 'Weekend Trip Packing',
+    body: 'Passport (Wallet)\nAirPods Pro 3\nMagSafe Battery Pack\nCamera Tripod',
+    folder: 'Personal',
+    pinned: false,
+    updatedAt: Date.now() - 86400000,
+  },
+];
+
+export const SEED_REMINDERS: ReminderItem[] = [
+  { id: 'rem1', title: 'Test Camera video recording & save to Photos', list: 'Today', priority: 'high', flagged: true, completed: false },
+  { id: 'rem2', title: 'Check App Store updates for YouTube & Spotify', list: 'Today', priority: 'medium', flagged: false, completed: false },
+  { id: 'rem3', title: 'Review Q4 design presentation', list: 'Work', priority: 'none', flagged: false, completed: true },
+];
+
+export const SEED_EVENTS: CalendarEvent[] = [
+  { id: 'ev1', title: 'Design Keynote Review', date: new Date().toISOString().slice(0, 10), time: '10:30 AM', location: 'Steve Jobs Theater', color: '#3b82f6' },
+  { id: 'ev2', title: 'Lunch with Sarah', date: new Date().toISOString().slice(0, 10), time: '1:00 PM', location: 'Caffè Macs', color: '#10b981' },
+  { id: 'ev3', title: 'Evening Run', date: new Date().toISOString().slice(0, 10), time: '6:15 PM', location: 'Shoreline Park', color: '#f97316' },
+];
+
+export const SEED_PASSWORDS: PasswordEntry[] = [
+  { id: 'pw1', site: 'icloud.com', username: 'alex.mercer@icloud.com', password: 'Ti18-ProMax!Liquid#92', notes: 'Primary Apple Account', updatedAt: Date.now() - 86400000 * 5 },
+  { id: 'pw2', site: 'github.com', username: 'alexmercer-dev', password: 'ghp_94xK!mQ7vZ2pL8wR', notes: '2FA enabled via Passkey', updatedAt: Date.now() - 86400000 * 14 },
+  { id: 'pw3', site: 'spotify.com', username: 'alex@studio.io', password: 'Sp0tify$SpatialAudio26', updatedAt: Date.now() - 86400000 * 30 },
+];
+
+export const SEED_BOOKMARKS: SafariBookmark[] = [
+  { id: 'b1', title: 'Google', url: 'https://www.google.com' },
+  { id: 'b2', title: 'Apple', url: 'https://www.apple.com' },
+  { id: 'b3', title: 'Hacker News', url: 'https://news.ycombinator.com' },
+  { id: 'b4', title: 'MDN Web Docs', url: 'https://developer.mozilla.org' },
+  { id: 'b5', title: 'YouTube', url: 'https://m.youtube.com' },
+  { id: 'b6', title: 'GitHub', url: 'https://github.com' },
+];
+
+export const SEED_MUSIC_TRACKS: MusicTrack[] = [
+  {
+    id: 'tr1',
+    title: 'Liquid Glass Horizon',
+    artist: 'Cupertino Ambient',
+    album: 'Titanium Sessions',
+    durationSec: 194,
+    coverGradient: 'from-sky-500 via-indigo-600 to-slate-900',
+    bpm: 92,
+    notes: [261.63, 329.63, 392.0, 493.88, 392.0, 329.63, 293.66, 392.0],
+  },
+  {
+    id: 'tr2',
+    title: 'Midnight ProMotion',
+    artist: 'Nova Pulse',
+    album: '120Hz Dreams',
+    durationSec: 218,
+    coverGradient: 'from-rose-600 via-amber-600 to-zinc-950',
+    bpm: 108,
+    notes: [220.0, 261.63, 329.63, 440.0, 392.0, 329.63, 293.66, 261.63],
+  },
+  {
+    id: 'tr3',
+    title: 'Glacier Echoes',
+    artist: 'Nordic Drift',
+    album: 'Spatial Rain',
+    durationSec: 242,
+    coverGradient: 'from-cyan-400 via-teal-600 to-slate-900',
+    bpm: 84,
+    notes: [293.66, 349.23, 440.0, 523.25, 440.0, 349.23, 329.63, 293.66],
+  },
+  {
+    id: 'tr4',
+    title: 'Burgundy Velvet',
+    artist: 'Satin Analog',
+    album: 'After Hours',
+    durationSec: 176,
+    coverGradient: 'from-fuchsia-700 via-rose-800 to-black',
+    bpm: 98,
+    notes: [246.94, 293.66, 369.99, 493.88, 440.0, 369.99, 329.63, 246.94],
+  },
+];
+
+export const SEED_YOUTUBE_VIDEOS: YouTubeVideo[] = [
+  {
+    id: 'yt-1',
+    youtubeId: 'aqz-KE-bpKQ',
+    title: 'Big Buck Bunny 60fps 4K - Blender Open Movie',
+    channel: 'Blender Foundation',
+    channelHandle: '@BlenderFoundation',
+    avatarColor: 'from-orange-500 to-amber-600',
+    views: '18M views',
+    uploadedAt: 'YouTube',
+    duration: '10:35',
+    category: 'Tech',
+    description: 'Open-source 4K 60fps 3D animated short film by the Blender Institute.',
+    likes: 412000,
+    gradient: 'from-emerald-700 via-teal-900 to-slate-950',
+    thumbnailUrl: 'https://i.ytimg.com/vi/aqz-KE-bpKQ/hqdefault.jpg',
+  },
+  {
+    id: 'yt-2',
+    youtubeId: 'jfKfPfyJRdk',
+    title: 'lofi hip hop radio - beats to relax/study to',
+    channel: 'Lofi Girl',
+    channelHandle: '@LofiGirl',
+    avatarColor: 'from-rose-500 to-amber-500',
+    views: 'LIVE',
+    uploadedAt: 'LIVE',
+    duration: 'LIVE',
+    category: 'Music',
+    description: '24/7 lofi hip hop radio stream on YouTube.',
+    likes: 1920000,
+    gradient: 'from-indigo-700 via-purple-900 to-slate-950',
+    thumbnailUrl: 'https://i.ytimg.com/vi/jfKfPfyJRdk/hqdefault.jpg',
+  },
+  {
+    id: 'yt-3',
+    youtubeId: 'LXb3EKWsInQ',
+    title: 'COSTA RICA IN 4K 60fps HDR (ULTRA HD)',
+    channel: 'Jacob + Katie Schwarz',
+    channelHandle: '@JacobKatieSchwarz',
+    avatarColor: 'from-emerald-500 to-cyan-600',
+    views: '92M views',
+    uploadedAt: 'YouTube',
+    duration: '5:13',
+    category: 'Science',
+    description: 'Official 4K 60fps HDR nature cinematography.',
+    likes: 874000,
+    gradient: 'from-green-600 via-emerald-900 to-zinc-950',
+    thumbnailUrl: 'https://i.ytimg.com/vi/LXb3EKWsInQ/hqdefault.jpg',
+  },
+];

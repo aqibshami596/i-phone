@@ -1,0 +1,11 @@
+{
+  "name": "iPhone 18 Pro Max Simulator",
+  "description": "Complete interactive iPhone 18 Pro Max web OS simulator featuring Liquid Glass UI, Dynamic Island, working App Store, YouTube, Camera, Safari, and Siri AI.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
